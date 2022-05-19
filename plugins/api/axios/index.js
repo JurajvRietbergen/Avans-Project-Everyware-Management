@@ -1,4 +1,4 @@
-import https from 'https'
+
 import * as questionnaire from './questionnaire'
 
 const axios = ($axios) => {
@@ -14,5 +14,5 @@ const configureEndpoints = ($axios, api) => {
   return obj
 }
 export default $axios => ({
-    questionnaire: configureEndpoints($axios, questionnaire)
+  questionnaire: configureEndpoints($axios, questionnaire)
 })

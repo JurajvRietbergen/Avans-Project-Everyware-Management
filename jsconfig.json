@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noImplicitAny": false,
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
@@ -9,5 +10,5 @@
     },
     "jsx": "preserve"
   },
-  "exclude": ["node_modules", ".nuxt", "dist"]
+  "exclude": ["node_modules", ".nuxt", "dist"],
 }

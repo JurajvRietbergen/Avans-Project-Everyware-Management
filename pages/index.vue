@@ -18,19 +18,13 @@ import FinishedQuestionnaires from '~/components/Homepage/FinishedQuestionnaires
 export default {
   components: { ActiveQuestionnaires, FinishedQuestionnaires },
   async asyncData ({ $api, store }) {
-    let questionnaires
-    if (store.state.questionnaires.length > 0) {
-      questionnaires = store.state.questionnaires
-      return { questionnaires }
-    } else {
-      const questionnaires = await $api.questionnaire.getQuestionnaire()
-      store.commit('ADD_QUESTIONNAIRES', questionnaires)
-      return { questionnaires }
-    }
+    const questionnaires = await $api.questionnaire.getQuestionnaire()
+    store.commit('ADD_QUESTIONNAIRES', questionnaires)
+    return { questionnaires }
   },
   data () {
     return {
-      questionnaires: {}
+      questionnaires: []
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <h1> Questionnaire Page TBD </h1>
+  <h1> Research Page TBD </h1>
 </template>
 
 <script>

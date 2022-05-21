@@ -15,12 +15,7 @@ export const mutations = {
     }
   },
   ADD_QUESTIONNAIRES (state, questionnaires) {
-    console.log('state', state.questionnaires.length)
-    if (state.questionnaires.length > 0) {
-      console.log('WARNING QUESTIONNAIRES EXIST!')
-    } else {
-      state.questionnaires = questionnaires
-    }
+    state.questionnaires = questionnaires
   },
   ADD_QUESTIONS (state, questionnaire) {
     if (state.questionnaires.length > 0) {

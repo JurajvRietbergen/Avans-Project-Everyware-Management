@@ -14,7 +14,7 @@
         <b-nav-item to="/questionnaires">
           Questionnaires
         </b-nav-item>
-        <b-nav-item to="/onderzoek">
+        <b-nav-item to="/research">
           Onderzoek
         </b-nav-item>
       </b-navbar-nav>

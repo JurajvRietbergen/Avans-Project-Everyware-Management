@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <Nav />
     <Nuxt />
   </div>
@@ -23,5 +23,8 @@ body,
   height: 100% !important;
   width: 100% !important;
 }
-</style>
 
+.layout {
+    background-color: #103a57
+}
+</style>

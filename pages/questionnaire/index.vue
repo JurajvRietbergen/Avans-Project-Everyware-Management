@@ -1,6 +1,6 @@
 <template>
   <div>
-    <questions-overview :category="categories" />
+    <questions-overview :categories="categories" />
   </div>
 </template>
 
@@ -13,7 +13,8 @@ export default {
   },
   async asyncData ({ $api }) {
     const categories = await $api.questionnaire.getCategories()
-    return categories
+    console.log(categories)
+    return { categories }
   },
   data () {
     return {

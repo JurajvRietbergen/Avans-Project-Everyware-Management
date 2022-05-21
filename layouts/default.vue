@@ -24,7 +24,8 @@ body,
   width: 100% !important;
 }
 
-.layout {
-    background-color: #103a57
+#__layout {
+    /* Uitvogelen hoe background aanpassen */
+    background-color: #EBF4FA
 }
 </style>

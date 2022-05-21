@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1> dede </h1>
-  </div>
+  <h1> hi </h1>
 </template>
 
 <script>

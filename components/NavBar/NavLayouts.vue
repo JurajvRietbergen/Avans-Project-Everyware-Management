@@ -1,17 +1,20 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="primary">
-    <b-navbar-brand href="#">
-      Accesibility
+    <b-navbar-brand to="/">
+      <b-img
+        src="@/assets/images/logo.png"
+        alt="Accessibility Logo"
+      />
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse" />
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item href="#">
-          Questionnaire
+        <b-nav-item to="/questionnaires">
+          Questionnaires
         </b-nav-item>
-        <b-nav-item href="#">
+        <b-nav-item to="/onderzoek">
           Onderzoek
         </b-nav-item>
       </b-navbar-nav>
@@ -21,7 +24,7 @@
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
-            <em>User</em>
+            User
           </template>
           <b-dropdown-item href="#">
             Profile
@@ -45,4 +48,10 @@ export default {
 .navbar-dark .navbar-nav .nav-link {
     color: #EBF4FA;
 }
+
+.header-logo {
+  width: 10%;
+  height: 70%;
+}
+
 </style>

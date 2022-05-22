@@ -41,7 +41,7 @@
           required
         />
       </b-form-group>
-      <b-button size="sm" variant="primary" @click="$emit('switchTab', 1)">
+      <b-button size="sm" variant="primary" @click="$emit('nextTab', form)">
         Doorgaan
       </b-button>
     </b-form>

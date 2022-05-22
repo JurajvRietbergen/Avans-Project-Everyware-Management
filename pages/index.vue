@@ -19,7 +19,6 @@ export default {
   components: { HomepageTable },
   async asyncData ({ $api, store }) {
     const questionnaires = await $api.questionnaire.getQuestionnaire()
-    store.commit('ADD_QUESTIONNAIRES', questionnaires)
     return { questionnaires }
   },
   data () {

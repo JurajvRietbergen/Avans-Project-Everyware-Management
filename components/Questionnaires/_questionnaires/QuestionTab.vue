@@ -5,7 +5,7 @@
         <b-card-text v-if="categories.length === 0" class="d-flex align-items-center">
           <h1> Voeg categorieën toe </h1>
         </b-card-text>
-        <b-card-text>
+        <div>
           <b-list-group>
             <b-list-group-item v-for="(category, category_index) in categories" :key="category.category_nr">
               <div class="mb-1 d-flex">
@@ -24,29 +24,29 @@
               </b-list-group>
             </b-list-group-item>
           </b-list-group>
-        </b-card-text>
+        </div>
       </b-col>
       <b-col>
-        <b-card-text class=" ml-2 d-flex flex-column">
+        <div class=" ml-2 d-flex flex-column">
           <b-card title="Add Category" class="mb-2">
-            <b-card-text class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between">
               <b-form-input v-model="add_category" placeholder="Voeg categorie toe" />
               <b-button class="ml-1" size="sm" variant="primary" @click="addCategory()">
                 Toevoegen
               </b-button>
-            </b-card-text>
+            </div>
           </b-card>
           <b-card title="Add Question">
-            <b-card-text class="d-flex flex-column justify-content-between">
+            <div class="d-flex flex-column justify-content-between">
               <b-form-input v-model="question.question" class="mb-1" placeholder="Voeg vraag toe" />
               <b-form-select v-model="question.selected_type" class="mb-1" :options="type_options" />
               <b-form-select v-model="question.selected_category" :options="category_options" />
-            </b-card-text>
+            </div>
             <b-button class="ml-1" size="sm" variant="primary" @click="addQuestion()">
               Toevoegen
             </b-button>
           </b-card>
-        </b-card-text>
+        </div>
       </b-col>
     </b-row>
     <b-row>
@@ -77,9 +77,8 @@ export default {
     addCategory () {
       if (this.add_category) {
         this.categories.push({ name: this.add_category, questions: [] })
-        // TODO USE STORE
-        // TODO add validation
         this.category_options.push({ value: this.add_category, text: this.add_category })
+        this.$store.commit('UPDATE_CATEGORIES', this.categories)
         this.add_category = null
       }
     },
@@ -88,6 +87,7 @@ export default {
       // TODO add type to HTML
       if (this.question.question) {
         this.categories.find(c => c.name === this.question.selected_category).questions.push({ question: this.question.question, type: this.question.selected_type })
+        this.$store.commit('UPDATE_CATEGORIES', this.categories)
         this.question = { question: null, selected_type: null, selected_category: null }
       }
     },

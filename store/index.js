@@ -1,5 +1,5 @@
 export const state = () => ({
-  questionnaires: [],
+  questionnaire: {},
   counter: 0
 })
 
@@ -7,20 +7,10 @@ export const mutations = {
   increment (state) {
     state.counter++
   },
-  ADD_QUESTIONNAIRE (state, questionnaire) {
-    if (state.questionnaires.find(q => q.id === questionnaire.id)) {
-      console.log('Exists already')
-    } else {
-      state.questionnaires.push(questionnaire)
-    }
+  NEW_QUESTIONNAIRE (state, questionnaire) {
+    state.questionnaire = questionnaire
   },
-  ADD_QUESTIONNAIRES (state, questionnaires) {
-    state.questionnaires = questionnaires
-  },
-  ADD_QUESTIONS (state, questionnaire) {
-    if (state.questionnaires.length > 0) {
-      // To make
-      console.log(state.questionnaires.find(q => q.id === questionnaire.id))
-    }
+  UPDATE_CATEGORIES (state, categories) {
+    state.questionnaire.categories = categories
   }
 }

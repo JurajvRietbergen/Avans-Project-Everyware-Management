@@ -1,13 +1,31 @@
 <template>
-  <h1> Questionnaire Page TBD </h1>
+  <b-container>
+    <b-row>
+      <b-col>
+        <QuestionnaireTable :questionnaires="questionnaires" />
+      </b-col>
+      <b-row />
+    </b-row>
+  </b-container>
 </template>
 
 <script>
-export default {
+import QuestionnaireTable from '~/components/Questionnaires/QuestionnaireTable.vue'
 
+export default {
+  components: { QuestionnaireTable },
+  async asyncData ({ $api }) {
+    const questionnaires = await $api.questionnaire.getQuestionnaire()
+    return { questionnaires }
+  },
+  data () {
+    return {
+      questionnaires: []
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

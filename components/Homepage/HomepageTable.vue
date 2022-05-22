@@ -1,5 +1,5 @@
 <template>
-  <b-card title="Voltooide Vragenlijsten">
+  <b-card :title="title" sub-title="TBD">
     <b-card-text>
       <b-table :items="questionnaires" :fields="fields" sort-by="id" sort-icon-left />
     </b-card-text>
@@ -8,13 +8,14 @@
 
 <script>
 export default {
-  props: ['questionnaires'],
+  props: ['questionnaires', 'title'],
   data () {
     return {
       fields: [
         { key: 'id', sortable: true },
         { key: 'title', label: 'Titel', sortable: true },
-        { key: 'active', label: 'Actief Tot', sortable: true }
+        { key: 'startdate', label: 'Begonnen', sortable: true },
+        { key: 'enddate', label: 'Eindigt', sortable: true }
       ]
     }
   }

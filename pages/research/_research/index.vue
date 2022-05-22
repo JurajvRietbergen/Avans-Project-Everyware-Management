@@ -11,8 +11,8 @@ import AnswerTable from '~/components/Research/AnswerTable.vue'
 export default {
   components: { AnswerTable },
 
-  async asyncData ({ $api, store }) {
-    const answers = await $api.research.getAnswers({ id: 1, type: 'json' })
+  async asyncData ({ $api, route }) {
+    const answers = await $api.research.getAnswers({ id: route.params.research, type: 'json' })
     return { answers }
   },
   data () {

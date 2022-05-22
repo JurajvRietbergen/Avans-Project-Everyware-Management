@@ -1,16 +1,10 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col>
-        <Nav />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <Nuxt />
-      </b-col>
-    </b-row>
-  </b-container>
+  <div>
+    <Nav />
+    <div class="main">
+      <Nuxt />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -39,11 +33,7 @@ body,
 </style>
 
 <style scoped>
-.container-fluid {
-  padding: 0;
-}
-
-.row {
-  margin-bottom: 2%;
+.main {
+  margin-top: 2%;
 }
 </style>

@@ -2,10 +2,10 @@
   <b-container>
     <b-row>
       <b-col>
-        <ActiveQuestionnaires :questionnaires="questionnaires" />
+        <HomepageTable :questionnaires="questionnaires" title="Recent Begonnen" />
       </b-col>
       <b-col>
-        <FinishedQuestionnaires :questionnaires="questionnaires" />
+        <HomepageTable :questionnaires="questionnaires" title="Recent Afgesloten" />
       </b-col>
       <b-row />
     </b-row>
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import ActiveQuestionnaires from '~/components/Homepage/ActiveQuestionnaires.vue'
-import FinishedQuestionnaires from '~/components/Homepage/FinishedQuestionnaires.vue'
+import HomepageTable from '~/components/Homepage/HomepageTable.vue'
+
 export default {
-  components: { ActiveQuestionnaires, FinishedQuestionnaires },
+  components: { HomepageTable },
   async asyncData ({ $api, store }) {
     const questionnaires = await $api.questionnaire.getQuestionnaire()
     store.commit('ADD_QUESTIONNAIRES', questionnaires)

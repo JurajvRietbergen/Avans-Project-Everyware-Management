@@ -1,5 +1,6 @@
 
 import * as questionnaire from './questionnaire'
+import * as research from './research'
 
 const axios = ($axios) => {
   const api = $axios.create({
@@ -14,5 +15,6 @@ const configureEndpoints = ($axios, api) => {
   return obj
 }
 export default $axios => ({
-  questionnaire: configureEndpoints($axios, questionnaire)
+  questionnaire: configureEndpoints($axios, questionnaire),
+  research: configureEndpoints($axios, research)
 })

@@ -10,7 +10,7 @@
             <QuestionTab @switchTab="switchTab" @lastTab="lastTab" />
           </b-tab>
           <b-tab title="Codes">
-            <CodeTab @submitQuestionnaire="submitQuestionnaire" />
+            <CodeTab ref="cTab" @submitQuestionnaire="submitQuestionnaire" />
           </b-tab>
         </b-tabs>
       </b-col>
@@ -53,16 +53,16 @@ export default {
     async submitQuestionnaire (data) {
       this.$nuxt.$loading.start()
       this.general.amount = data
-      console.log('here')
       await this.$api.questionnaire.postQuestionnaire(this.general).then((res) => {
-        console.log(res)
-        this.$store.commit('ADD_CODES', res)
+        // this.$store.commit('ADD_CODES', res)
+        this.$refs.cTab.updateCodes(res)
       })
         .catch((e) => {
           // Error handling if API is broken
           this.$bvModal.msgBoxOk('' + e)
         })
       this.$nuxt.$loading.finish()
+      console.log('done')
     }
 
   }

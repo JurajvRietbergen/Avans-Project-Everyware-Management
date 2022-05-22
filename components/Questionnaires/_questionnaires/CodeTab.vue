@@ -7,6 +7,10 @@
         Genereer
       </b-button>
     </div>
+    <h1 v-if="generatedCodes">
+      Generated Codes
+    </h1>
+    <hr v-if="generatedCodes">
     <b-list-group>
       <b-list-group-item v-for="(codes) in generatedCodes" :key="codes">
         {{ codes }}
@@ -29,25 +33,14 @@ export default {
         .then((value) => {
           if (value) {
             this.$emit('submitQuestionnaire', this.amount)
-            this.generatedCodes = this.$store.state.codes
           }
         })
         .catch((err) => {
           console.log(err)
         })
     },
-    async submitData (data) {
-      this.$nuxt.$loading.start()
-      await this.$api.inventarisatie.assignUser(data).then((res) => {
-        this.$nuxt.$loading.finish()
-        return res
-      })
-        .catch((e) => {
-          // Error handling if API is broken
-          this.$bvModal.msgBoxOk('' + e)
-          this.$nuxt.$loading.finish()
-          return null
-        })
+    updateCodes (receivedCodes) {
+      this.generatedCodes = receivedCodes
     }
   }
 }

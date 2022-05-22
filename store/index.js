@@ -1,5 +1,6 @@
 export const state = () => ({
   questionnaire: {},
+  codes: [],
   counter: 0
 })
 
@@ -12,5 +13,8 @@ export const mutations = {
   },
   UPDATE_CATEGORIES (state, categories) {
     state.questionnaire.categories = categories
+  },
+  ADD_CODES (state, codes) {
+    state.codes = codes
   }
 }

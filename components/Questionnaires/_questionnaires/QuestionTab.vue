@@ -54,7 +54,7 @@
         <b-button size="sm" variant="primary" @click="$emit('switchTab', -1)">
           Terug
         </b-button>
-        <b-button size="sm" variant="primary" @click="$emit('switchTab', 1)">
+        <b-button size="sm" variant="primary" @click="$emit('lastTab', categories)">
           Doorgaan
         </b-button>
       </b-col>
@@ -66,10 +66,10 @@
 export default {
   data () {
     return {
-      categories: [{ name: 'Test', questions: [{ question: 'hoe laat is het', type: 'open' }, { question: 'hodadsadawdaw is het' }] }, { name: 'Another one', questions: [{ question: 'Welke aadrapel is rood' }] }, { name: 'Annooo', questions: [{ question: 'hoe koe' }] }],
+      categories: [{ name: 'Test', questions: [{ question: 'hoe laat is het', type: 'Open' }, { question: 'hodadsadawdaw is het', type: 'Open' }] }, { name: 'Another one', questions: [{ question: 'Welke aadrapel is rood', type: 'Digit' }] }, { name: 'Annooo', questions: [{ question: 'hoe koe', type: 'Open' }] }],
       add_category: null,
       question: { question: null, selected_type: null, selected_category: null },
-      type_options: [{ value: null, text: 'Selecteer een type' }, { value: 'open', text: 'open' }, { value: 'digit', text: 'digit' }],
+      type_options: [{ value: null, text: 'Selecteer een type' }, { value: 'Open', text: 'Open' }, { value: 'Digit', text: 'Digit' }],
       category_options: [{ value: null, text: 'Selecteer een categorie' }]
     }
   },
@@ -78,7 +78,6 @@ export default {
       if (this.add_category) {
         this.categories.push({ name: this.add_category, questions: [] })
         this.category_options.push({ value: this.add_category, text: this.add_category })
-        this.$store.commit('UPDATE_CATEGORIES', this.categories)
         this.add_category = null
       }
     },
@@ -87,19 +86,14 @@ export default {
       // TODO add type to HTML
       if (this.question.question) {
         this.categories.find(c => c.name === this.question.selected_category).questions.push({ question: this.question.question, type: this.question.selected_type })
-        this.$store.commit('UPDATE_CATEGORIES', this.categories)
         this.question = { question: null, selected_type: null, selected_category: null }
       }
     },
     deleteCategory (cIndex) {
-      console.log(this.categories)
-      console.log(this.categories.splice(cIndex, 1))
-      console.log(this.categories)
+      this.categories.splice(cIndex, 1)
     },
     deleteQuestion (cIndex, qIndex) {
-      console.log(this.categories)
-      console.log(this.categories[cIndex].questions.splice(qIndex, 1))
-      console.log(this.categories)
+      this.categories[cIndex].questions.splice(qIndex, 1)
     }
   }
 }

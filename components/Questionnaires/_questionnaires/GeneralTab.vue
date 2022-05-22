@@ -1,7 +1,7 @@
 <template>
   <b-card title="Vragenlijst Info">
     <hr>
-    <b-form>
+    <b-form @submit="onSubmit">
       <b-form-group
         id="input-group-1"
         label="Vragenlijst Titel:"
@@ -41,7 +41,7 @@
           required
         />
       </b-form-group>
-      <b-button size="sm" variant="primary" @click="$emit('nextTab', form)">
+      <b-button type="submit" size="sm" variant="primary">
         Doorgaan
       </b-button>
     </b-form>
@@ -59,6 +59,12 @@ export default {
         startdate: '',
         enddate: ''
       }
+    }
+  },
+  methods: {
+    onSubmit (event) {
+      event.preventDefault()
+      this.$emit('nextTab', this.form)
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <h1> Onderzoekspagina {{ $route.params.research }} </h1>
+    <h1> Antwoorden overzicht </h1>
     <AnswerTable :answers="answers" />
   </b-container>
 </template>

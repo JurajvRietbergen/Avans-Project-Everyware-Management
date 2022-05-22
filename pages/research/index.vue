@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <h1> Research Page TBD </h1>
+    <h1> Questionnaire overzicht </h1>
     <ResearchQuestionnaires :questionnaires="questionnaires" />
   </b-container>
 </template>

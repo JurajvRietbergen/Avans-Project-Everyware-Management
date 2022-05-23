@@ -2,8 +2,12 @@ export const postQuestion = $axios => (form) => {
   return $axios.$post('/questions', form)
 }
 
-export const getQuestionnaire = $axios => () => {
+export const getQuestionnaires = $axios => () => {
   return $axios.$get('/questionnaires')
+}
+
+export const getQuestionnaire = $axios => (id) => {
+  return $axios.$get('/questionnaires/' + id)
 }
 
 export const postQuestionnaire = $axios => (form) => {

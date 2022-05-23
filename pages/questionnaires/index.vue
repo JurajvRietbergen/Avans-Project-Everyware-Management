@@ -2,10 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <HomepageTable :questionnaires="questionnaires" title="Recent Begonnen" />
-      </b-col>
-      <b-col>
-        <HomepageTable :questionnaires="questionnaires" title="Recent Afgesloten" />
+        <QuestionnaireTable :questionnaires="questionnaires" />
       </b-col>
       <b-row />
     </b-row>
@@ -13,11 +10,11 @@
 </template>
 
 <script>
-import HomepageTable from '~/components/Homepage/HomepageTable.vue'
+import QuestionnaireTable from '~/components/Questionnaires/QuestionnaireTable.vue'
 
 export default {
-  components: { HomepageTable },
-  async asyncData ({ $api, store }) {
+  components: { QuestionnaireTable },
+  async asyncData ({ $api }) {
     const questionnaires = await $api.questionnaire.getQuestionnaires()
     return { questionnaires }
   },

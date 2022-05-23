@@ -19,6 +19,9 @@
         </template>
       </b-table>
     </b-card-text>
+    <b-button size="sm" variant="primary" to="/questionnaires/new">
+      Nieuwe Vragenlijst
+    </b-button>
   </b-card>
 </template>
 

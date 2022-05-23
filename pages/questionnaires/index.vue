@@ -15,7 +15,7 @@ import QuestionnaireTable from '~/components/Questionnaires/QuestionnaireTable.v
 export default {
   components: { QuestionnaireTable },
   async asyncData ({ $api }) {
-    const questionnaires = await $api.questionnaire.getQuestionnaire()
+    const questionnaires = await $api.questionnaire.getQuestionnaires()
     return { questionnaires }
   },
   data () {

@@ -12,7 +12,7 @@ export default {
   components: { ResearchQuestionnaires },
 
   async asyncData ({ $api }) {
-    const questionnaires = await $api.questionnaire.getQuestionnaire()
+    const questionnaires = await $api.questionnaire.getQuestionnaires()
     return { questionnaires }
   },
   data () {

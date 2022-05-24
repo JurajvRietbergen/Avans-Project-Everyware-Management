@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       fields: [
-        { key: 'category', label: 'Categorie' },
+        { key: 'name', label: 'Categorie' },
         { key: 'question_nr', label: 'Vraag Nummer' },
         { key: 'question', label: 'Vraag' },
         { key: 'type', label: 'Vraagtype' },

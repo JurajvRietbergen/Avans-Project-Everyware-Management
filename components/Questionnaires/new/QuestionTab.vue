@@ -91,6 +91,7 @@ export default {
     },
     deleteCategory (cIndex) {
       this.categories.splice(cIndex, 1)
+      this.category_options.splice((cIndex + 1), 1)
     },
     deleteQuestion (cIndex, qIndex) {
       this.categories[cIndex].questions.splice(qIndex, 1)

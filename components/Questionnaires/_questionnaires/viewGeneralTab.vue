@@ -10,9 +10,9 @@
         <b-form-input
           id="input-1"
           v-model="form.title"
-          readonly
           placeholder="Schrijf een titel"
           required
+          :readonly="isReadonly"
         />
       </b-form-group>
 
@@ -20,9 +20,9 @@
         <b-form-input
           id="input-2"
           v-model="form.introduction"
-          readonly
           placeholder="Schrijf een introductie"
           required
+          :readonly="isReadonly"
         />
       </b-form-group>
 
@@ -30,9 +30,9 @@
         <b-form-datepicker
           id="input-3"
           v-model="form.startdate"
-          readonly
           locale="nl"
           required
+          :readonly="isReadonly"
         />
       </b-form-group>
 
@@ -40,16 +40,23 @@
         <b-form-datepicker
           id="input-4"
           v-model="form.enddate"
-          readonly
           locale="nl"
           required
+          :readonly="isReadonly"
         />
       </b-form-group>
     </div>
+    <b-button size="sm" variant="primary" :hidden="isReadonly">
+      Sla op
+    </b-button>
+    <b-button size="sm" variant="primary" :hidden="isReadonly" @click="resetForm()">
+      Reset
+    </b-button>
   </b-card>
 </template>
 
 <script>
+
 export default {
   props: ['data'],
   data () {
@@ -62,12 +69,28 @@ export default {
       }
     }
   },
+    computed: {
+    isReadonly () {
+      const currentDate = new Date().setHours(0, 0, 0, 0)
+      const startDate = new Date(this.data.startdate).setHours(0, 0, 0, 0)
+      return currentDate > startDate
+    }
+  },
   mounted () {
     this.form = this.data
+  },
+  methods: {
+    resetForm () {
+      console.log(this.form.title)
+      console.log(this.data.title)
+      this.form = this.data
+    }
   }
+
 }
 </script>
 
 <style scoped>
 
 </style>
+

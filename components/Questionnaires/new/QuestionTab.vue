@@ -92,9 +92,15 @@ export default {
     deleteCategory (cIndex) {
       this.categories.splice(cIndex, 1)
     },
+    created() {
+      setInterval(this.getNow, 1000);
+    },
     deleteQuestion (cIndex, qIndex) {
       this.categories[cIndex].questions.splice(qIndex, 1)
-    }
+      getNow: function() {
+        const today = new Date();
+        const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+      this.categories[cIndex].questions.set.date(date)
   }
 }
 </script>

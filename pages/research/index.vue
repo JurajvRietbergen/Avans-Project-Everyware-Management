@@ -1,7 +1,10 @@
 <template>
   <b-container>
-    <h1> Questionnaire overzicht </h1>
-    <ResearchQuestionnaires :questionnaires="questionnaires" />
+    <b-row>
+      <b-col>
+        <ResearchQuestionnaires :questionnaires="questionnaires" />
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -12,7 +15,7 @@ export default {
   components: { ResearchQuestionnaires },
 
   async asyncData ({ $api }) {
-    const questionnaires = await $api.questionnaire.getQuestionnaire()
+    const questionnaires = await $api.questionnaire.getQuestionnaires()
     return { questionnaires }
   },
   data () {

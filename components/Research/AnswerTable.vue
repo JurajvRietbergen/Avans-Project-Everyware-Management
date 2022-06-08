@@ -92,7 +92,7 @@ export default {
       this.selectedQuestion = null
     },
     getExcel () {
-      this.$api.research.getAnswers({ id: this.$route.params.research, type: 'excel' }).then((res) => {
+      this.$api.research.getExcelAnswers({ id: this.$route.params.research, type: 'excel' }).then((res) => {
         console.log(res)
         const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
         const url = window.URL.createObjectURL(blob)

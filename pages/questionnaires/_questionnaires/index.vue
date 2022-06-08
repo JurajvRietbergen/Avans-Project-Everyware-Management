@@ -6,9 +6,7 @@
           <b-tab title="Algemeen" active>
             <GeneralTab :data="questionnaire" />
           </b-tab>
-          <b-tab title="Vragen">
-            <!-- TODO
-            alleen edit tab als de stardate nog niet is geweest -->
+          <b-tab b-if="computed" title="Vragen">
             <EditQuestionTab :info="questionnaire.categories" />
           </b-tab>
           <b-tab title="Codes">

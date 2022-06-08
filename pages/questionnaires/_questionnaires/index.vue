@@ -2,17 +2,19 @@
   <b-container>
     <b-row>
       <b-col>
-        <b-tabs v-model="tabIndex" content-class="mt-3">
-          <b-tab title="Algemeen" active>
-            <GeneralTab :data="questionnaire" />
-          </b-tab>
-          <b-tab b-if="computed" title="Vragen">
-            <EditQuestionTab :info="questionnaire.categories" />
-          </b-tab>
-          <b-tab title="Codes">
-            <CodeTab :codes="questionnaire.codes" />
-          </b-tab>
-        </b-tabs>
+        <vue-tabs>
+          <b-tabs v-model="tabIndex" content-class="mt-3">
+            <b-tab title="Algemeen" active>
+              <GeneralTab :data="questionnaire" />
+            </b-tab>
+            <b-tab b-if="computed" title="Vragen">
+              <EditQuestionTab :info="questionnaire.categories" />
+            </b-tab>
+            <b-tab title="Codes">
+              <CodeTab :codes="questionnaire.codes" />
+            </b-tab>
+          </b-tabs>
+        </vue-tabs>
       </b-col>
       <!-- TODO ald de startdate nog niet is geweest een op slaan knop toevoegen -->
     </b-row>

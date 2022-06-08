@@ -7,7 +7,7 @@
             <GeneralTab @nextTab="nextTab" />
           </b-tab>
           <b-tab title="Vragen">
-            <QuestionTab @switchTab="switchTab" @lastTab="lastTab" />
+            <QuestionTab :info="[]" @switchTab="switchTab" @lastTab="lastTab" />
           </b-tab>
           <b-tab title="Codes">
             <CodeTab ref="cTab" @submitQuestionnaire="submitQuestionnaire" />

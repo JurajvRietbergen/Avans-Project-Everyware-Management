@@ -76,7 +76,10 @@ export default {
   },
   mounted () {
     this.categories = this.info
-    this.categories.forEach(category => this.category_options.push({ value: category.name, text: category.name }))
+
+    if (Array.isArray(this.categories) && this.categories.length) {
+      this.categories.forEach(category => this.category_options.push({ value: category.name, text: category.name }))
+    }
   },
   methods: {
     addCategory () {

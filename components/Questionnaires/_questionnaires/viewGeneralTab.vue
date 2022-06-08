@@ -46,12 +46,6 @@
         />
       </b-form-group>
     </div>
-    <b-button size="sm" variant="primary" :hidden="isReadonly">
-      Sla op
-    </b-button>
-    <b-button size="sm" variant="primary" :hidden="isReadonly" @click="resetForm()">
-      Reset
-    </b-button>
   </b-card>
 </template>
 
@@ -69,7 +63,7 @@ export default {
       }
     }
   },
-    computed: {
+  computed: {
     isReadonly () {
       const currentDate = new Date().setHours(0, 0, 0, 0)
       const startDate = new Date(this.data.startdate).setHours(0, 0, 0, 0)
@@ -78,13 +72,6 @@ export default {
   },
   mounted () {
     this.form = this.data
-  },
-  methods: {
-    resetForm () {
-      console.log(this.form.title)
-      console.log(this.data.title)
-      this.form = this.data
-    }
   }
 
 }
@@ -93,4 +80,3 @@ export default {
 <style scoped>
 
 </style>
-

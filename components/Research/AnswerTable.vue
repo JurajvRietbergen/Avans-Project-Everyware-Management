@@ -10,29 +10,45 @@
         </b-col>
       </b-row>
       <b-row>
-        <h1 v-if="!selectedQuestion">
-          Selecteer een categorie en vraag
-        </h1>
-        <b-table
-          v-if="selectedQuestion"
-          :items="answerList"
-          :fields="fields"
-          :current-page="currentPage"
-          :per-page="perPage"
-          sort-by="code"
-        />
-        <b-pagination
-          v-if="selectedQuestion"
-          v-model="currentPage"
-          :per-page="perPage"
-          :total-rows="totalRows"
-          align="fill"
-          size="sm"
-          class="my-0"
-        />
-        <hr>
+        <b-col>
+          <h1 v-if="!selectedQuestion">
+            Selecteer een categorie en vraag
+          </h1>
+        </b-col>
       </b-row>
       <b-row>
+        <b-col>
+          <b-table
+            v-if="selectedQuestion"
+            :items="answerList"
+            :fields="fields"
+            :current-page="currentPage"
+            :per-page="perPage"
+            sort-by="code"
+          >
+            <template #cell(Afbeeldingen)="row">
+              <b-button size="sm" variant="primary" @click="goToImage(row)">
+                <b-icon icon="images" />
+              </b-button>
+            </template>
+          </b-table>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <b-pagination
+            v-if="selectedQuestion"
+            v-model="currentPage"
+            :per-page="perPage"
+            :total-rows="totalRows"
+            align="fill"
+            size="sm"
+            class="my-0"
+          />
+        </b-col>
+        <hr>
+      </b-row>
+      <b-row class="mt-1">
         <b-col>
           <b-button class="ml-1" size="sm" variant="primary" @click="getExcel()">
             Genereer Excel
@@ -40,6 +56,25 @@
         </b-col>
       </b-row>
     </b-container>
+    <b-modal id="ImageModal" title="Afbeeldingen" hide-footer>
+      <b-carousel
+        id="carousel-1"
+        v-model="slide"
+        :interval="4000"
+        controls
+        indicators
+        background="#ababab"
+        img-width="1024"
+        img-height="480"
+        style="text-shadow: 1px 1px 2px #333;"
+        @sliding-start="onSlideStart"
+        @sliding-end="onSlideEnd"
+      >
+        <div v-for="(image) in images" :key="image">
+          <b-carousel-slide :img-src="image" />
+        </div>
+      </b-carousel>
+    </b-modal>
   </b-card>
 </template>
 
@@ -48,16 +83,21 @@ export default {
   props: ['answers'],
   data () {
     return {
+      showModal: false,
       selectedCategory: null,
       selectedQuestion: null,
       categoryList: [{ value: null, text: 'Selecteer een categorie' }],
       fields: [
         { key: 'code', label: 'User' },
-        { key: 'text', label: 'Antwoord' }
+        { key: 'text', label: 'Antwoord' },
+        { key: 'Afbeeldingen' }
       ],
       currentPage: 1,
       perPage: 12,
-      totalRows: this.answers.length
+      totalRows: this.answers.length,
+      slide: 0,
+      sliding: null,
+      images: []
     }
   },
   computed: {
@@ -99,6 +139,25 @@ export default {
         console.log(url)
         window.open(url)
       })
+    },
+    goToImage (row) {
+      this.$api.research.getImagesAnswers({ usercode_id: row.item.usercode_id, questionnaire_question_id: row.item.questionnaire_question_id }).then((res) => {
+        console.log(res)
+        const blob = new Blob([res], { type: 'image/jpeg' })
+        const url = window.URL.createObjectURL(blob)
+        this.images.push(url)
+        console.log(this.images)
+        this.$bvModal.show('ImageModal')
+      }).catch((err) => {
+        console.log(err)
+        this.$bvModal.msgBoxConfirm('Deze vraag heeft geen afbeeldingen')
+      })
+    },
+    onSlideStart (slide) {
+      this.sliding = true
+    },
+    onSlideEnd (slide) {
+      this.sliding = false
     }
   }
 }

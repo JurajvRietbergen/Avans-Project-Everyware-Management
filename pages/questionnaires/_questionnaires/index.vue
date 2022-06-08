@@ -7,7 +7,9 @@
             <GeneralTab :data="questionnaire" />
           </b-tab>
           <b-tab title="Vragen">
-            <QuestionTab :info="questionnaire.categories" />
+            <!-- TODO
+            alleen edit tab als de stardate nog niet is geweest -->
+            <EditQuestionTab :info="questionnaire.categories" />
           </b-tab>
           <b-tab title="Codes">
             <CodeTab :codes="questionnaire.codes" />
@@ -20,12 +22,13 @@
 
 <script>
 // import QuestionTab from '~/components/Questionnaires/_questionnaires/viewQuestionTab.vue'
-import QuestionTab from '~/components/Questionnaires/new/QuestionTab.vue'
+import EditQuestionTab from '~/components/Questionnaires/new/QuestionTab.vue'
 import GeneralTab from '~/components/Questionnaires/_questionnaires/viewGeneralTab.vue'
 import CodeTab from '~/components/Questionnaires/_questionnaires/viewCodeTab.vue'
 
 export default {
-  components: { QuestionTab, GeneralTab, CodeTab },
+  // TODO add QuestionTab to components
+  components: { EditQuestionTab, GeneralTab, CodeTab },
   async asyncData ({ $api, route }) {
     const questionnaire = await $api.questionnaire.getQuestionnaire(route.params.questionnaires)
     console.log(questionnaire)

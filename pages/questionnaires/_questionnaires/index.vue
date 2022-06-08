@@ -16,6 +16,7 @@
           </b-tab>
         </b-tabs>
       </b-col>
+      <!-- TODO ald de startdate nog niet is geweest een op slaan knop toevoegen -->
     </b-row>
   </b-container>
 </template>

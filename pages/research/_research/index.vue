@@ -1,7 +1,10 @@
 <template>
   <b-container>
-    <h1> Antwoorden overzicht </h1>
-    <AnswerTable :answers="answers" />
+    <b-row>
+      <b-col>
+        <AnswerTable :answers="answers" />
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 

@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import QuestionTab from '~/components/Questionnaires/_questionnaires/viewQuestionTab.vue'
+// import QuestionTab from '~/components/Questionnaires/_questionnaires/viewQuestionTab.vue'
+import QuestionTab from '~/components/Questionnaires/new/QuestionTab.vue'
 import GeneralTab from '~/components/Questionnaires/_questionnaires/viewGeneralTab.vue'
 import CodeTab from '~/components/Questionnaires/_questionnaires/viewCodeTab.vue'
 

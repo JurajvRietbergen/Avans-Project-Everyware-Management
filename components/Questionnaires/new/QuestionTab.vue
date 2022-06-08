@@ -64,14 +64,19 @@
 
 <script>
 export default {
+  props: ['info'],
   data () {
     return {
-      categories: [{ name: 'Test', questions: [{ question: 'hoe laat is het', type: 'Open' }, { question: 'hodadsadawdaw is het', type: 'Open' }] }, { name: 'Another one', questions: [{ question: 'Welke aadrapel is rood', type: 'Digit' }] }, { name: 'Annooo', questions: [{ question: 'hoe koe', type: 'Open' }] }],
+      categories: [],
       add_category: null,
       question: { question: null, selected_type: null, selected_category: null },
       type_options: [{ value: null, text: 'Selecteer een type' }, { value: 'Open', text: 'Open' }, { value: 'Digit', text: 'Digit' }],
       category_options: [{ value: null, text: 'Selecteer een categorie' }]
     }
+  },
+  mounted () {
+    this.categories = this.info
+    this.categories.forEach(category => this.category_options.push({ value: category.name, text: category.name }))
   },
   methods: {
     addCategory () {

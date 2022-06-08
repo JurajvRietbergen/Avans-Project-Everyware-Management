@@ -30,6 +30,14 @@
           size="sm"
           class="my-0"
         />
+        <hr>
+      </b-row>
+      <b-row>
+        <b-col>
+          <b-button class="ml-1" size="sm" variant="primary" @click="getExcel()">
+            Genereer Excel
+          </b-button>
+        </b-col>
       </b-row>
     </b-container>
   </b-card>
@@ -82,6 +90,15 @@ export default {
   methods: {
     clearSelected () {
       this.selectedQuestion = null
+    },
+    getExcel () {
+      this.$api.research.getAnswers({ id: this.$route.params.research, type: 'excel' }).then((res) => {
+        console.log(res)
+        const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+        const url = window.URL.createObjectURL(blob)
+        console.log(url)
+        window.open(url)
+      })
     }
   }
 }

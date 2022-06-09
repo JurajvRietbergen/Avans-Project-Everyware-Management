@@ -16,7 +16,7 @@
             <CodeTab :codes="questionnaire.codes" />
           </b-tab>
         </b-tabs>
-        <b-button v-if="isEditable" class="mt-2" variant="primary">
+        <b-button v-if="isEditable" class="mt-2" variant="primary" @click="aData">
           Sla op
         </b-button>
       </b-col>
@@ -31,18 +31,12 @@ import GeneralTab from '~/components/Questionnaires/_questionnaires/viewGeneralT
 import CodeTab from '~/components/Questionnaires/_questionnaires/viewCodeTab.vue'
 
 export default {
-  // TODO add QuestionTab to components
   components: { QuestionTab, EditQuestionTab, GeneralTab, CodeTab },
   async asyncData ({ $api, route }) {
     const questionnaire = await $api.questionnaire.getQuestionnaire(route.params.questionnaires)
     console.log(questionnaire)
     return { questionnaire }
-    },
-    async aData({ $api, route }) {
-      const questionnaire = await $api.questionnaire.patchQuestionnaire(route.params.questionnaires)
-      console.log(questionnaire)
-      return { questionnaire }
-    },
+  },
   data () {
     return {
       general: null,
@@ -65,6 +59,14 @@ export default {
       } else {
         this.tabIndex--
       }
+    },
+    patchQuestionnaire () {
+      this.$api.research.patchQuestionnaire({ id: this.$route.params.questionnaire, form: [] }).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+        this.$bvModal.msgBoxConfirm('ERROR')
+      })
     }
   }
 }

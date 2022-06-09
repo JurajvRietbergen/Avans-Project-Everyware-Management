@@ -1,7 +1,7 @@
 <template>
   <b-card title="Vragenlijst Info">
     <hr>
-    <div class="d-flex flex-column">
+    <b-form @submit="onSubmit">
       <b-form-group
         id="input-group-1"
         label="Vragenlijst Titel:"
@@ -45,7 +45,10 @@
           :readonly="isReadonly"
         />
       </b-form-group>
-    </div>
+      <b-button v-if="!isReadonly" type="submit" size="sm" variant="primary">
+        Doorgaan
+      </b-button>
+    </b-form>
   </b-card>
 </template>
 
@@ -60,18 +63,22 @@ export default {
         introduction: '',
         startdate: '',
         enddate: ''
-      }
-    }
-  },
-  computed: {
-    isReadonly () {
-      const currentDate = new Date().setHours(0, 0, 0, 0)
-      const startDate = new Date(this.data.startdate).setHours(0, 0, 0, 0)
-      return currentDate > startDate
+      },
+      isReadonly: true
     }
   },
   mounted () {
     this.form = this.data
+    const currentDate = new Date().setHours(0, 0, 0, 0)
+    const startDate = new Date(this.data.startdate).setHours(0, 0, 0, 0)
+    this.isReadonly = currentDate > startDate
+  },
+  methods: {
+    onSubmit (event) {
+      console.log('test')
+      event.preventDefault()
+      this.$emit('nextTab', this.form)
+    }
   }
 
 }

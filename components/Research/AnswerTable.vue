@@ -141,12 +141,13 @@ export default {
       })
     },
     goToImage (row) {
+      this.images = []
       this.$api.research.getImagesAnswers({ usercode_id: row.item.usercode_id, questionnaire_question_id: row.item.questionnaire_question_id }).then((res) => {
         console.log(res)
-        const blob = new Blob([res], { type: 'image/jpeg' })
-        const url = window.URL.createObjectURL(blob)
-        this.images.push(url)
-        console.log(this.images)
+        res.forEach((res) => {
+          console.log(res)
+          this.images.push('https://api.redby.net/images/' + res.path)
+        })
         this.$bvModal.show('ImageModal')
       }).catch((err) => {
         console.log(err)

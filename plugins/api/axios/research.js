@@ -7,5 +7,5 @@ export const getExcelAnswers = $axios => (form) => {
 }
 
 export const getImagesAnswers = $axios => (form) => {
-  return $axios.$get('/answers/images', { params: form, responseType: 'blob' })
+  return $axios.$get('/answers/images', { params: form })
 }

@@ -37,7 +37,12 @@ export default {
     const questionnaire = await $api.questionnaire.getQuestionnaire(route.params.questionnaires)
     console.log(questionnaire)
     return { questionnaire }
-  },
+    },
+    async aData({ $api, route }) {
+      const questionnaire = await $api.questionnaire.patchQuestionnaire(route.params.questionnaires)
+      console.log(questionnaire)
+      return { questionnaire }
+    },
   data () {
     return {
       general: null,

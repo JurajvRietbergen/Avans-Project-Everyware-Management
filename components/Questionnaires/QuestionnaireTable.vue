@@ -12,11 +12,6 @@
             <b-icon icon="clipboard-plus" aria-hidden="true" />
           </b-button>
         </template>
-        <template #cell(delete)="row">
-          <b-button size="sm" variant="primary" @click="deleteQuestionnaire(row.item)">
-            <b-icon icon="trash" aria-hidden="true" />
-          </b-button>
-        </template>
       </b-table>
     </b-card-text>
     <b-button size="sm" variant="primary" to="/questionnaires/new">
@@ -36,8 +31,7 @@ export default {
         { key: 'startdate', label: 'Begonnen', sortable: true },
         { key: 'enddate', label: 'Eindigt', sortable: true },
         { key: 'view' },
-        { key: 'copy' },
-        { key: 'delete' }
+        { key: 'copy' }
       ]
     }
   },

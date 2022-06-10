@@ -18,6 +18,6 @@ export const postCategory = $axios => (form) => {
   return $axios.$post('/categories', form)
 }
 
-export const patchQuestionnaire = $axios => (id, form) => {
-  return $axios.$patch('/questionnaires/' + id, form)
+export const patchQuestionnaire = $axios => (form) => {
+  return $axios.$post('/questionnaires/' + form.id, form.form)
 }

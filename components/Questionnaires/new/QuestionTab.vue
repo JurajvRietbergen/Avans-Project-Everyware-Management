@@ -54,7 +54,7 @@
         <b-button size="sm" variant="primary" @click="$emit('switchTab', -1)">
           Terug
         </b-button>
-        <b-button size="sm" variant="primary" @click="$emit('lastTab', categories)">
+        <b-button size="sm" variant="primary" @click="$emit('switchTab', 1)">
           Doorgaan
         </b-button>
       </b-col>
@@ -75,10 +75,12 @@ export default {
     }
   },
   mounted () {
-    this.categories = this.info
+    if (this.info) {
+      this.categories = this.info
 
-    if (Array.isArray(this.categories) && this.categories.length) {
-      this.categories.forEach(category => this.category_options.push({ value: category.name, text: category.name }))
+      if (Array.isArray(this.categories) && this.categories.length) {
+        this.categories.forEach(category => this.category_options.push({ value: category.name, text: category.name }))
+      }
     }
   },
   methods: {
@@ -87,6 +89,8 @@ export default {
         this.categories.push({ name: this.add_category, questions: [] })
         this.category_options.push({ value: this.add_category, text: this.add_category })
         this.add_category = null
+        const updateCategory = JSON.parse(JSON.stringify(this.categories))
+        this.$store.commit('UPDATE_CATEGORIES', updateCategory)
       }
     },
     addQuestion () {
@@ -95,8 +99,11 @@ export default {
       if (this.question.question) {
         this.categories.find(c => c.name === this.question.selected_category).questions.push({ question: this.question.question, type: this.question.selected_type })
         this.question = { question: null, selected_type: null, selected_category: null }
+        const updateQuestion = JSON.parse(JSON.stringify(this.categories))
+        this.$store.commit('UPDATE_CATEGORIES', updateQuestion)
       }
     },
+    // TODO Remove category from category_options
     deleteCategory (cIndex) {
       this.categories.splice(cIndex, 1)
     },

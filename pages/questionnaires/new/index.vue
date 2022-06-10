@@ -4,10 +4,10 @@
       <b-col>
         <b-tabs v-model="tabIndex" content-class="mt-3">
           <b-tab title="Algemeen" active>
-            <GeneralTab @nextTab="nextTab" />
+            <GeneralTab @switchTab="switchTab" />
           </b-tab>
           <b-tab title="Vragen">
-            <QuestionTab :info="[]" @switchTab="switchTab" @lastTab="lastTab" />
+            <QuestionTab @switchTab="switchTab" />
           </b-tab>
           <b-tab title="Codes">
             <CodeTab ref="cTab" @submitQuestionnaire="submitQuestionnaire" />
@@ -27,9 +27,11 @@ export default {
   components: { QuestionTab, GeneralTab, CodeTab },
   data () {
     return {
-      general: null,
       tabIndex: 1
     }
+  },
+  mounted () {
+    this.$store.commit('NEW_QUESTIONNAIRE', {})
   },
   methods: {
     switchTab (index) {
@@ -39,21 +41,10 @@ export default {
         this.tabIndex--
       }
     },
-    nextTab (general) {
-      this.general = general
-      console.log(this.general)
-      this.tabIndex++
-    },
-    lastTab (categories) {
-      if (this.general) {
-        this.general.categories = categories
-        this.tabIndex++
-      }
-    },
     async submitQuestionnaire (data) {
       this.$nuxt.$loading.start()
-      this.general.amount = data
-      await this.$api.questionnaire.postQuestionnaire(this.general).then((res) => {
+      this.$store.commit('ADD_CODE', data)
+      await this.$api.questionnaire.postQuestionnaire(this.$store.state.questionnaire).then((res) => {
         this.$router.push({ path: '/questionnaires/' + res })
         // this.$refs.cTab.updateCodes(res)
       })

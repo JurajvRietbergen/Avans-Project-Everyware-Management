@@ -63,25 +63,14 @@ export default {
         this.tabIndex--
       }
     },
-    // nextTab (general) {
-    //   this.general = general
-    //   console.log(this.general)
-    //   this.tabIndex++
-    // },
-    // lastTab (categories) {
-    //   if (this.general) {
-    //     this.general.categories = categories
-    //     this.tabIndex++
-    //   }
-    // },
     patchQuestionnaire () {
       this.$api.questionnaire.patchQuestionnaire({ id: this.$route.params.questionnaires, form: this.$store.state.questionnaire }).then((res) => {
         console.log(res)
+        this.$router.push({ path: '/questionnaires' })
       }).catch((err) => {
         console.log(err)
         this.$bvModal.msgBoxConfirm('ERROR')
       })
-      console.log(this.$store.state.questionnaire)
     }
   }
 }

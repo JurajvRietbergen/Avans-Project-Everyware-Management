@@ -10,7 +10,7 @@
             <b-list-group-item v-for="(category, category_index) in categories" :key="category.category_nr">
               <div class="mb-1 d-flex">
                 <h5> {{ category.name }} </h5>
-                <b-button class="ml-1" size="sm" variant="primary" @click="deleteCategory(category_index)">
+                <b-button class="ml-1" size="sm" variant="primary" @click="deleteCategory(category_index, category.name)">
                   <b-icon icon="trash" aria-hidden="true" />
                 </b-button>
               </div>
@@ -104,11 +104,17 @@ export default {
       }
     },
     // TODO Remove category from category_options
-    deleteCategory (cIndex) {
+    deleteCategory (cIndex, category) {
       this.categories.splice(cIndex, 1)
+      const removeIndex = this.category_options.findIndex(option => option.text === category)
+      this.category_options.splice(removeIndex, 1)
+      const updateQuestion = JSON.parse(JSON.stringify(this.categories))
+      this.$store.commit('UPDATE_CATEGORIES', updateQuestion)
     },
     deleteQuestion (cIndex, qIndex) {
       this.categories[cIndex].questions.splice(qIndex, 1)
+      const updateQuestion = JSON.parse(JSON.stringify(this.categories))
+      this.$store.commit('UPDATE_CATEGORIES', updateQuestion)
     }
   }
 }

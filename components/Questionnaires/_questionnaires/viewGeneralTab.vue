@@ -10,9 +10,9 @@
         <b-form-input
           id="input-1"
           v-model="form.title"
-          readonly
           placeholder="Schrijf een titel"
           required
+          readonly
         />
       </b-form-group>
 
@@ -20,9 +20,9 @@
         <b-form-input
           id="input-2"
           v-model="form.introduction"
-          readonly
           placeholder="Schrijf een introductie"
           required
+          readonly
         />
       </b-form-group>
 
@@ -30,9 +30,9 @@
         <b-form-datepicker
           id="input-3"
           v-model="form.startdate"
-          readonly
           locale="nl"
           required
+          readonly
         />
       </b-form-group>
 
@@ -40,9 +40,9 @@
         <b-form-datepicker
           id="input-4"
           v-model="form.enddate"
-          readonly
           locale="nl"
           required
+          readonly
         />
       </b-form-group>
     </div>
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+
 export default {
   props: ['data'],
   data () {

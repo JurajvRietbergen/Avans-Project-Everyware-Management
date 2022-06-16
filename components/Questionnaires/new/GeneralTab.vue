@@ -1,7 +1,7 @@
 <template>
   <b-card title="Vragenlijst Info">
     <hr>
-    <b-form @submit="onSubmit">
+    <b-form>
       <b-form-group
         id="input-group-1"
         label="Vragenlijst Titel:"
@@ -12,6 +12,7 @@
           v-model="form.title"
           placeholder="Schrijf een titel"
           required
+          @input="updateForm"
         />
       </b-form-group>
 
@@ -21,6 +22,7 @@
           v-model="form.introduction"
           placeholder="Schrijf een introductie"
           required
+          @input="updateForm"
         />
       </b-form-group>
 
@@ -30,6 +32,7 @@
           v-model="form.startdate"
           locale="nl"
           required
+          @input="updateForm"
         />
       </b-form-group>
 
@@ -39,9 +42,10 @@
           v-model="form.enddate"
           locale="nl"
           required
+          @input="updateForm"
         />
       </b-form-group>
-      <b-button type="submit" size="sm" variant="primary">
+      <b-button size="sm" variant="primary" @click="$emit('switchTab', 1)">
         Doorgaan
       </b-button>
     </b-form>
@@ -51,6 +55,7 @@
 
 <script>
 export default {
+  props: ['data'],
   data () {
     return {
       form: {
@@ -61,10 +66,14 @@ export default {
       }
     }
   },
+  mounted () {
+    if (this.data) {
+      this.form = this.data
+    }
+  },
   methods: {
-    onSubmit (event) {
-      event.preventDefault()
-      this.$emit('nextTab', this.form)
+    updateForm (e) {
+      this.$store.commit('UPDATE_GENERAL', this.form)
     }
   }
 }

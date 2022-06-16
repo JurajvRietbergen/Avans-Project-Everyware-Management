@@ -9,6 +9,7 @@ const axios = ($axios) => {
 
   return api
 }
+
 const configureEndpoints = ($axios, api) => {
   const obj = {}
   Object.keys(api).forEach((key) => {

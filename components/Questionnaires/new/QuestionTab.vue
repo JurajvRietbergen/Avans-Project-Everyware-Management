@@ -10,7 +10,7 @@
             <b-list-group-item v-for="(category, category_index) in categories" :key="category.category_nr">
               <div class="mb-1 d-flex">
                 <h5> {{ category.name }} </h5>
-                <b-button class="ml-1" size="sm" variant="primary" @click="deleteCategory(category_index)">
+                <b-button class="ml-1" size="sm" variant="primary" @click="deleteCategory(category_index, category.name)">
                   <b-icon icon="trash" aria-hidden="true" />
                 </b-button>
               </div>
@@ -54,7 +54,7 @@
         <b-button size="sm" variant="primary" @click="$emit('switchTab', -1)">
           Terug
         </b-button>
-        <b-button size="sm" variant="primary" @click="$emit('lastTab', categories)">
+        <b-button size="sm" variant="primary" @click="$emit('switchTab', 1)">
           Doorgaan
         </b-button>
       </b-col>
@@ -64,6 +64,7 @@
 
 <script>
 export default {
+  props: ['info'],
   data () {
     return {
       categories: [],
@@ -73,12 +74,23 @@ export default {
       category_options: [{ value: null, text: 'Selecteer een categorie' }]
     }
   },
+  mounted () {
+    if (this.info) {
+      this.categories = this.info
+
+      if (Array.isArray(this.categories) && this.categories.length) {
+        this.categories.forEach(category => this.category_options.push({ value: category.name, text: category.name }))
+      }
+    }
+  },
   methods: {
     addCategory () {
       if (this.add_category) {
         this.categories.push({ name: this.add_category, questions: [] })
         this.category_options.push({ value: this.add_category, text: this.add_category })
         this.add_category = null
+        const updateCategory = JSON.parse(JSON.stringify(this.categories))
+        this.$store.commit('UPDATE_CATEGORIES', updateCategory)
       }
     },
     addQuestion () {
@@ -87,13 +99,22 @@ export default {
       if (this.question.question) {
         this.categories.find(c => c.name === this.question.selected_category).questions.push({ question: this.question.question, type: this.question.selected_type })
         this.question = { question: null, selected_type: null, selected_category: null }
+        const updateQuestion = JSON.parse(JSON.stringify(this.categories))
+        this.$store.commit('UPDATE_CATEGORIES', updateQuestion)
       }
     },
-    deleteCategory (cIndex) {
+    // TODO Remove category from category_options
+    deleteCategory (cIndex, category) {
       this.categories.splice(cIndex, 1)
+      const removeIndex = this.category_options.findIndex(option => option.text === category)
+      this.category_options.splice(removeIndex, 1)
+      const updateQuestion = JSON.parse(JSON.stringify(this.categories))
+      this.$store.commit('UPDATE_CATEGORIES', updateQuestion)
     },
     deleteQuestion (cIndex, qIndex) {
       this.categories[cIndex].questions.splice(qIndex, 1)
+      const updateQuestion = JSON.parse(JSON.stringify(this.categories))
+      this.$store.commit('UPDATE_CATEGORIES', updateQuestion)
     }
   }
 }

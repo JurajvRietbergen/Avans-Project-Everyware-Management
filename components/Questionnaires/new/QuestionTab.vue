@@ -9,7 +9,7 @@
           <b-list-group>
             <b-list-group-item v-for="(category, category_index) in categories" :key="category.category_nr">
               <div class="mb-1 d-flex">
-                <h5> {{ category.name }} </h5>
+                <h5> {{ category.name }} - {{ category.addition }} </h5>
                 <b-button class="ml-1" size="sm" variant="primary" @click="deleteCategory(category_index, category.name)">
                   <b-icon icon="trash" aria-hidden="true" />
                 </b-button>
@@ -29,8 +29,11 @@
       <b-col>
         <div class=" ml-2 d-flex flex-column">
           <b-card title="Categorie toevoegen" class="mb-2">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex mb-1">
               <b-form-input v-model="add_category" placeholder="Voeg categorie toe" />
+            </div>
+            <div class="d-flex justify-content-between">
+              <b-form-input v-model="add_category_description" placeholder="Voeg categorie descriptie toe" />
               <b-button class="ml-1" size="sm" variant="primary" @click="addCategory()">
                 Toevoegen
               </b-button>
@@ -69,6 +72,7 @@ export default {
     return {
       categories: [],
       add_category: null,
+      add_category_description: null,
       question: { question: null, selected_type: null, selected_category: null },
       type_options: [{ value: null, text: 'Selecteer een type' }, { value: 'Open', text: 'Open' }, { value: 'Digit', text: 'Digit' }],
       category_options: [{ value: null, text: 'Selecteer een categorie' }]
@@ -85,11 +89,12 @@ export default {
   },
   methods: {
     addCategory () {
-      if (this.add_category) {
+      if (this.add_category && this.add_category_description) {
         if (!this.categories.find(c => c.name === this.add_category)) {
-          this.categories.push({ name: this.add_category, questions: [] })
+          this.categories.push({ name: this.add_category, addition: this.add_category_description, questions: [] })
           this.category_options.push({ value: this.add_category, text: this.add_category })
           this.add_category = null
+          this.add_category_description = null
           const updateCategory = JSON.parse(JSON.stringify(this.categories))
           this.$store.commit('UPDATE_CATEGORIES', updateCategory)
         } else {

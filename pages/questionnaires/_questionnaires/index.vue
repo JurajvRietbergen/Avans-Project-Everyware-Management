@@ -50,10 +50,14 @@ export default {
     }
   },
   mounted () {
-    const currentDate = new Date().setHours(0, 0, 0, 0)
-    const startDate = new Date(this.questionnaire.startdate).setHours(0, 0, 0, 0)
-    console.log(currentDate > startDate)
-    this.isEditable = currentDate < startDate
+    if (this.questionnaire.startdate) {
+      const currentDate = new Date().setHours(0, 0, 0, 0)
+      const startDate = new Date(this.questionnaire.startdate).setHours(0, 0, 0, 0)
+      console.log(currentDate > startDate)
+      this.isEditable = currentDate < startDate
+    } else {
+      this.isEditable = true
+    }
   },
   methods: {
     switchTab (index) {
@@ -64,13 +68,64 @@ export default {
       }
     },
     patchQuestionnaire () {
-      this.$api.questionnaire.patchQuestionnaire({ id: this.$route.params.questionnaires, form: this.$store.state.questionnaire }).then((res) => {
-        console.log(res)
-        this.$router.push({ path: '/questionnaires' })
-      }).catch((err) => {
-        console.log(err)
-        this.$bvModal.msgBoxConfirm('ERROR')
-      })
+      if (this.validation()) {
+        this.$api.questionnaire.patchQuestionnaire({ id: this.$route.params.questionnaires, form: this.$store.state.questionnaire }).then((res) => {
+          console.log(res)
+          this.$router.push({ path: '/questionnaires' })
+        }).catch((err) => {
+          console.log(err)
+          this.$bvModal.msgBoxConfirm('ERROR')
+        })
+      } else {
+        const erros = this.errorMessage()
+        let errorString = null
+        erros.forEach((error) => {
+          if (errorString) {
+            errorString = errorString + ', ' + error
+          } else {
+            errorString = error
+          }
+        })
+        this.$bvModal.msgBoxOk('U heeft fouten bij de volgende invulvelden: ' + errorString)
+      }
+    },
+    validation () {
+      const check = this.$store.state.questionnaire
+      if (check.title) {
+        if (check.startdate) {
+          if (check.enddate) {
+            if (check.categories) {
+              if (check.startdate < check.enddate) {
+                return true
+              }
+            }
+          }
+        }
+      }
+      return false
+    },
+
+    errorMessage () {
+      const check = this.$store.state.questionnaire
+      const errors = []
+      if (!check.title) {
+        errors.push('Titel')
+      }
+      if (!check.startdate) {
+        errors.push('Start datum')
+      }
+      if (!check.enddate) {
+        errors.push('Eind datum')
+      }
+      if (!check.categories) {
+        errors.push('Categorieën')
+      }
+      if (check.startdate && check.enddate) {
+        if (check.startdate > check.enddate) {
+          errors.push('Datums incorrect')
+        }
+      }
+      return errors
     }
   }
 }

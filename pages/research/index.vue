@@ -15,7 +15,7 @@ export default {
   components: { ResearchQuestionnaires },
 
   async asyncData ({ $api }) {
-    const questionnaires = await $api.questionnaire.getQuestionnaires()
+    const questionnaires = await $api.research.getAllAnswers()
     return { questionnaires }
   },
   data () {

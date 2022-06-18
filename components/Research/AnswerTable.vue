@@ -113,11 +113,14 @@ export default {
       return list
     },
     answerList () {
-      console.log(this.selectedQuestion)
+      if (this.answers[this.selectedCategory]) {
       // TODO: BUG #1, because question index has to be made +1 it has to be done -1 here.
-      const table = this.answers[this.selectedCategory].questions[this.selectedQuestion - 1].answers
-      console.log(table)
-      return table
+        const table = this.answers[this.selectedCategory].questions[this.selectedQuestion - 1].answers
+        console.log(table)
+        return table
+      }
+      this.clearSelected()
+      return null
     }
   },
   mounted () {

@@ -18,7 +18,7 @@ export default {
       fields: [
         { key: 'id', sortable: true },
         { key: 'title', label: 'Titel', sortable: true },
-        { key: 'active', label: 'Actief Tot', sortable: true },
+        { key: 'amount', label: 'Antwoorden', sortable: true },
         { key: 'view' }
       ]
     }

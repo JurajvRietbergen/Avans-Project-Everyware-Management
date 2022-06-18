@@ -33,13 +33,18 @@ export default {
   mounted () {
     const currDate = new Date()
     this.questionnaires.forEach((questionnaire) => {
-      console.log(questionnaire)
+      console.log(new Date(questionnaire.enddate) + ' - ' + currDate)
       if (questionnaire.startdate) {
         if (currDate > new Date(questionnaire.startdate)) {
           if (currDate > new Date(questionnaire.enddate)) {
-            this.recentlyEnded.push(questionnaire)
+            const tempDate = new Date()
+            tempDate.setDate(currDate.getDate() - 7)
+            if (new Date(questionnaire.enddate) > tempDate) {
+              this.recentlyEnded.push(questionnaire)
+            }
           }
         } else {
+          console.log('this')
           this.unstarted.push(questionnaire)
         }
       } else {

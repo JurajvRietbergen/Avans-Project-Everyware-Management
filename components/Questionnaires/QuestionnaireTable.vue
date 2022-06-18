@@ -39,8 +39,8 @@ export default {
       fields: [
         { key: 'id', sortable: true },
         { key: 'title', label: 'Titel', sortable: true },
-        { key: 'startdate', label: 'Begonnen', sortable: true },
-        { key: 'enddate', label: 'Eindigt', sortable: true },
+        { key: 'startdate', label: 'Begonnen', sortable: true, formatter: 'formatDateAssigned' },
+        { key: 'enddate', label: 'Eindigt', sortable: true, formatter: 'formatDateAssigned' },
         { key: 'view' },
         { key: 'copy' },
         { key: 'delete' }
@@ -78,7 +78,10 @@ export default {
           console.log(err)
         })
     },
-
+    formatDateAssigned (value) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(value).toLocaleDateString('en', options)
+    },
     deleteQuestionnaire (item) {
       this.$bvModal.msgBoxConfirm('Weet je zeker dat je ' + item.title + ' wilt verwijderen?')
         .then((value) => {

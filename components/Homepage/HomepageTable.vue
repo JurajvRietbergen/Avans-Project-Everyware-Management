@@ -20,8 +20,8 @@ export default {
       fields: [
         { key: 'id', sortable: true },
         { key: 'title', label: 'Titel', sortable: true },
-        { key: 'startdate', label: 'Begonnen', sortable: true },
-        { key: 'enddate', label: 'Eindigt', sortable: true },
+        { key: 'startdate', label: 'Begonnen', sortable: true, formatter: 'formatDateAssigned' },
+        { key: 'enddate', label: 'Eindigt', sortable: true, formatter: 'formatDateAssigned' },
         { key: 'view' }
       ]
     }
@@ -30,8 +30,11 @@ export default {
   methods: {
     goToQuestionnaire (item) {
       this.$router.push({ path: '/questionnaires/' + item.id })
+    },
+    formatDateAssigned (value) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(value).toLocaleDateString('en', options)
     }
-
   }
 }
 </script>

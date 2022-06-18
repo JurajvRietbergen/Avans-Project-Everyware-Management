@@ -71,7 +71,7 @@ export default {
 
     validation () {
       const check = this.$store.state.questionnaire
-      if (!check.title) {
+      if (check.title) {
         if (check.startdate) {
           if (check.enddate) {
             if (check.categories) {

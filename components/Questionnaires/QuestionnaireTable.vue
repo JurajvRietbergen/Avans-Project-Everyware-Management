@@ -12,11 +12,22 @@
             <b-icon icon="clipboard-plus" aria-hidden="true" />
           </b-button>
         </template>
+        <template #cell(delete)="row">
+          <b-button size="sm" variant="primary" @click="deleteQuestionnaire(row.item)">
+            <b-icon icon="trash" aria-hidden="true" />
+          </b-button>
+        </template>
       </b-table>
     </b-card-text>
     <b-button size="sm" variant="primary" to="/questionnaires/new">
       Nieuwe Vragenlijst
     </b-button>
+    <b-modal id="copyQuestionnaire" title="" ok-only>
+      <p>
+        Hoeveel codes wilt u genereeren met de copy vragenlijst?
+      </p>
+      <b-form-input v-model="codeAmount" type="number" placeholder="Voeg hoeveelheid codes toe" />
+    </b-modal>
   </b-card>
 </template>
 
@@ -31,8 +42,10 @@ export default {
         { key: 'startdate', label: 'Begonnen', sortable: true },
         { key: 'enddate', label: 'Eindigt', sortable: true },
         { key: 'view' },
-        { key: 'copy' }
-      ]
+        { key: 'copy' },
+        { key: 'delete' }
+      ],
+      codeAmount: null
     }
   },
   methods: {
@@ -41,7 +54,29 @@ export default {
     },
 
     copyQuestionnaire (item) {
-
+      this.codeAmount = null
+      const h = this.$createElement
+      const messageVNode = h('b-input', {
+        props: {
+          value: this.codeAmount,
+          type: 'number',
+          placeholder: 'Voeg hoeveelheid codes toe'
+        },
+        on: { input: (value) => { this.codeAmount = value } }
+      })
+      this.$bvModal.msgBoxConfirm([messageVNode])
+        .then((value) => {
+          if (value) {
+            console.log(item)
+            const form = { id: item.id, amount: this.codeAmount }
+            this.$api.questionnaire.copyQuestionnaire(form).then((res) => {
+              this.$router.push({ path: '/questionnaires/' + res })
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
 
     deleteQuestionnaire (item) {

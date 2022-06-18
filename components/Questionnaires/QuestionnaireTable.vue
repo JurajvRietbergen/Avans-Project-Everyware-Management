@@ -80,7 +80,7 @@ export default {
     },
     formatDateAssigned (value) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(value).toLocaleDateString('en', options)
+      return new Date(value).toLocaleDateString('nl', options)
     },
     deleteQuestionnaire (item) {
       this.$bvModal.msgBoxConfirm('Weet je zeker dat je ' + item.title + ' wilt verwijderen?')

@@ -2,10 +2,10 @@
   <b-container>
     <b-row>
       <b-col>
-        <HomepageTable :questionnaires="questionnaires" title="Recent Begonnen" />
+        <HomepageTable :questionnaires="unstarted" title="Onbegonnen Vragenlijsten" />
       </b-col>
       <b-col>
-        <HomepageTable :questionnaires="questionnaires" title="Recent Afgesloten" />
+        <HomepageTable :questionnaires="recentlyEnded" title="Recent Afgesloten Vragenlijsten" />
       </b-col>
       <b-row />
     </b-row>
@@ -24,8 +24,28 @@ export default {
   },
   data () {
     return {
-      questionnaires: []
+      questionnaires: [],
+      unstarted: [],
+      recentlyEnded: []
     }
+  },
+
+  mounted () {
+    const currDate = new Date()
+    this.questionnaires.forEach((questionnaire) => {
+      console.log(questionnaire)
+      if (questionnaire.startdate) {
+        if (currDate > new Date(questionnaire.startdate)) {
+          if (currDate > new Date(questionnaire.enddate)) {
+            this.recentlyEnded.push(questionnaire)
+          }
+        } else {
+          this.unstarted.push(questionnaire)
+        }
+      } else {
+        this.unstarted.push(questionnaire)
+      }
+    })
   }
 }
 </script>

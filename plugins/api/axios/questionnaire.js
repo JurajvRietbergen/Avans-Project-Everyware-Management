@@ -25,3 +25,7 @@ export const patchQuestionnaire = $axios => (form) => {
 export const copyQuestionnaire = $axios => (form) => {
   return $axios.$get('/copyQuestionnaire/' + form.id + '/' + form.amount)
 }
+
+export const deleteQuestionnaire = $axios => (id) => {
+  return $axios.$delete('/questionnaires/' + id)
+}

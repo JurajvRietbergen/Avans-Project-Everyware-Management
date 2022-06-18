@@ -64,7 +64,7 @@ export default {
         },
         on: { input: (value) => { this.codeAmount = value } }
       })
-      this.$bvModal.msgBoxConfirm([messageVNode])
+      this.$bvModal.msgBoxConfirm([messageVNode], { title: `Kopieer ${item.title}?` })
         .then((value) => {
           if (value) {
             console.log(item)
@@ -80,7 +80,20 @@ export default {
     },
 
     deleteQuestionnaire (item) {
-
+      this.$bvModal.msgBoxConfirm('Weet je zeker dat je ' + item.title + ' wilt verwijderen?')
+        .then((value) => {
+          if (value) {
+            this.$api.questionnaire.deleteQuestionnaire(item.id).then((res) => {
+              console.log(res)
+            }).catch((err) => {
+              console.log(err)
+              this.$bvModal.msgBoxOk('Deze questionnaire is al gestart en kan niet worden verwijderd')
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 }

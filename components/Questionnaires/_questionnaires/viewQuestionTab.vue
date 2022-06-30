@@ -26,6 +26,7 @@ export default {
   },
   mounted () {
     this.categories = this.info
+    console.log(this.categories);
   }
 }
 </script>

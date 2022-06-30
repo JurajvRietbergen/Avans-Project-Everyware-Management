@@ -22,6 +22,12 @@
     <b-button size="sm" variant="primary" to="/questionnaires/new">
       Nieuwe Vragenlijst
     </b-button>
+    <b-modal id="copyQuestionnaire" title="" ok-only>
+      <p>
+        Hoeveel codes wilt u genereeren met de copy vragenlijst?
+      </p>
+      <b-form-input v-model="codeAmount" type="number" placeholder="Voeg hoeveelheid codes toe" />
+    </b-modal>
   </b-card>
 </template>
 
@@ -33,12 +39,13 @@ export default {
       fields: [
         { key: 'id', sortable: true },
         { key: 'title', label: 'Titel', sortable: true },
-        { key: 'startdate', label: 'Begonnen', sortable: true },
-        { key: 'enddate', label: 'Eindigt', sortable: true },
+        { key: 'startdate', label: 'Begonnen', sortable: true, formatter: 'formatDateAssigned' },
+        { key: 'enddate', label: 'Eindigt', sortable: true, formatter: 'formatDateAssigned' },
         { key: 'view' },
         { key: 'copy' },
         { key: 'delete' }
-      ]
+      ],
+      codeAmount: null
     }
   },
   methods: {
@@ -47,11 +54,49 @@ export default {
     },
 
     copyQuestionnaire (item) {
-
+      this.codeAmount = null
+      const h = this.$createElement
+      const messageVNode = h('b-input', {
+        props: {
+          value: this.codeAmount,
+          type: 'number',
+          placeholder: 'Voeg hoeveelheid codes toe'
+        },
+        on: { input: (value) => { this.codeAmount = value } }
+      })
+      this.$bvModal.msgBoxConfirm([messageVNode], { title: `Kopieer ${item.title}?` })
+        .then((value) => {
+          if (value) {
+            console.log(item)
+            const form = { id: item.id, amount: this.codeAmount }
+            this.$api.questionnaire.copyQuestionnaire(form).then((res) => {
+              this.$router.push({ path: '/questionnaires/' + res })
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
-
+    formatDateAssigned (value) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(value).toLocaleDateString('nl', options)
+    },
     deleteQuestionnaire (item) {
-
+      this.$bvModal.msgBoxConfirm('Weet je zeker dat je ' + item.title + ' wilt verwijderen?')
+        .then((value) => {
+          if (value) {
+            this.$api.questionnaire.deleteQuestionnaire(item.id).then((res) => {
+              console.log(res)
+            }).catch((err) => {
+              console.log(err)
+              this.$bvModal.msgBoxOk('Deze questionnaire is al gestart en kan niet worden verwijderd')
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 }

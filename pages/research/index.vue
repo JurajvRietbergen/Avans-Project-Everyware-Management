@@ -1,7 +1,10 @@
 <template>
   <b-container>
-    <h1> Questionnaire overzicht </h1>
-    <ResearchQuestionnaires :questionnaires="questionnaires" />
+    <b-row>
+      <b-col>
+        <ResearchQuestionnaires :questionnaires="questionnaires" />
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -11,10 +14,8 @@ import ResearchQuestionnaires from '~/components/Research/ResearchTable.vue'
 export default {
   components: { ResearchQuestionnaires },
 
-  async asyncData ({ $api, store }) {
-    const questionnaires = await $api.questionnaire.getQuestionnaire()
-    const test = await $api.research.getAnswers({ id: 1, type: 'Bram was hier' })
-    console.log(test)
+  async asyncData ({ $api }) {
+    const questionnaires = await $api.research.getAllAnswers()
     return { questionnaires }
   },
   data () {
